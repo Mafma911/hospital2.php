@@ -1,0 +1,56 @@
+<?php
+    function printResults($toprint)
+    {
+      echo "<table border='1'>
+      <tr>
+      <th>idPatients</th>
+      <th>Name</th>
+      <th>age</th>
+      <th>illness</th>
+      <th>doctors_iddoctors</th>
+      </tr>";
+      foreach($toprint as $row)
+      {
+        echo "<tr>";
+        echo "<td>" . $row['idPatients'] . "</td>";
+        echo "<td>" . $row['Name'] . "</td>";
+        echo "<td>" . $row['age'] . "</td>";
+        echo "<td>" . $row['illness'] . "</td>";
+        echo "<td>" . $row['doctors_iddoctors'] . "</td>";
+        echo "</tr>";
+      }
+      echo "</table><br/>";
+    }
+    function showAllPatients ()
+    {
+      $user = "root";
+      $pass = "root";
+      //opens database connection
+      try
+      {
+        $dbh = new PDO('mysql:host=localhost:3306;dbname=Hospital', $user, $pass);
+      } catch (PDOException $e) {
+          print "Error!: " . $e->getMessage() . "<br/>";
+          die();
+      }
+      $result = $dbh->query('SELECT * from Patients');
+      printResults($result);
+      $dbh = null;
+    }
+    function showSutdentByid ($id){
+      $user = "root";
+      $pass = "root";
+      try
+      {
+        $dbh = new PDO('mysql:host=localhost:3306;dbname=Hospital', $user, $pass);
+      } catch (PDOException $e) {
+          print "Error!: " . $e->getMessage() . "<br/>";
+          die();
+      }
+      $result = $dbh->query('SELECT * from Patients where id ='.$id);
+      printResults($result);
+      $dbh = null;
+    }
+    showAllPatients();
+    //showSutdentByID (1);
+?>
